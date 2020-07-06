@@ -49,7 +49,7 @@ class Api::V1::LessonsController < ApplicationController
   # If user supplies a number as the category, treat it as the category id
   # Otherwise, try to look up the right category by name
   def lesson_params
-    @lesson_params |= begin
+    @lesson_params ||= begin
       lp = params.require(:lesson).permit(:name, :summary, :category, :source)
       category = params.require(:category)
       lp[:category] = if category.to_i.positive?
