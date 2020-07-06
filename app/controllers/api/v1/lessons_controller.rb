@@ -14,6 +14,9 @@ class Api::V1::LessonsController < ApplicationController
 
   # POST /api/v1/lessons
   def create
+    Rails.logger.fatal "initial params = #{params.inspect}"
+    Rails.logger.fatal "lesson_params = #{lesson_params.inspect}"
+    Rails.logger.fatal "post-lp params = #{params.inspect}"
     @lesson = Lesson.new(lesson_params)
     if @lesson.save
       render json: @lesson, status: :created, location: api_v1_lesson_url(@lesson)
@@ -46,12 +49,15 @@ class Api::V1::LessonsController < ApplicationController
   # If user supplies a number as the category, treat it as the category id
   # Otherwise, try to look up the right category by name
   def lesson_params
-    params.require(:lesson).permit(:name, :summary, :category, :source)
-    params[:category] = if params[:category].to_i.positive?
-      Category.find(params[:category])
-    else
-      Category.find_by(name: params[:category])
+    @lesson_params ||= begin
+      lp = params.require(:lesson).permit(:name, :summary, :category, :source)
+      category = params.require(:category)
+      lp[:category] = if category.to_i.positive?
+        Category.find(category)
+      else
+        Category.find_by(name: category)
+      end
+      lp
     end
-    params
   end
 end
