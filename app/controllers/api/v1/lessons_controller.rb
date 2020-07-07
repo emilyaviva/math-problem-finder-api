@@ -14,9 +14,6 @@ class Api::V1::LessonsController < ApplicationController
 
   # POST /api/v1/lessons
   def create
-    Rails.logger.fatal "initial params = #{params.inspect}"
-    Rails.logger.fatal "lesson_params = #{lesson_params.inspect}"
-    Rails.logger.fatal "post-lp params = #{params.inspect}"
     @lesson = Lesson.new(lesson_params)
     if @lesson.save
       render json: @lesson, status: :created, location: api_v1_lesson_url(@lesson)
