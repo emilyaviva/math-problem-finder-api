@@ -22,4 +22,11 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :test do
+  gem 'factory_bot_rails', '~> 6.1.0'
+  gem 'shoulda-matchers', '~> 4.3.0'
+  gem 'faker'
+  gem 'database_cleaner'
+end
+
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
