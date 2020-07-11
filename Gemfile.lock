@@ -97,6 +97,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    paint (2.2.0)
     pg (1.2.3)
     puma (4.3.5)
       nio4r (~> 2.0)
@@ -169,9 +170,12 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
+    unicode-display_width (1.7.0)
     websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whirly (0.2.6)
+      unicode-display_width (~> 1.1)
     zeitwerk (2.3.1)
 
 PLATFORMS
@@ -185,6 +189,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.1.0)
   faker
   listen (~> 3.2)
+  paint
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rack-cors
@@ -194,6 +199,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  whirly
 
 RUBY VERSION
    ruby 2.7.1p83
