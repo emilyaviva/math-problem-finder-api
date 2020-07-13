@@ -50,4 +50,6 @@ RSpec.configure do |config|
   config.around(:each) do |example|
     DatabaseCleaner.cleaning { example.run }
   end
+
+  config.include RequestSpecHelper, type: :request
 end
