@@ -4,37 +4,30 @@ class Api::V1::LessonsController < ApplicationController
   # GET /api/v1/lessons
   def index
     @lessons = Lesson.all
-    render json: @lessons, status: :ok
+    json_response(@lessons)
   end
 
   # GET /api/v1/lessons/:id
   def show
-    render json: @lesson, status: :ok
+    json_response(@lesson)
   end
 
   # POST /api/v1/lessons
   def create
-    @lesson = Lesson.new(lesson_params)
-    if @lesson.save
-      render json: @lesson, status: :created, location: api_v1_lesson_url(@lesson)
-    else
-      render json: @lesson.errors, status: :unprocessable_entity
-    end
+    @lesson = Lesson.create!(lesson_params)
+    json_response(@lesson, :created)
   end
 
   # PUT/PATCH /api/v1/lessons/:id
   def update
-    if @lesson.update(lesson_params)
-      render json: @lesson
-    else
-      render json: @lesson.errors, status: :unprocessable_entity
-    end
+    @lesson.update!(lesson_params)
+    json_response(@lesson)
   end
 
   # DELETE /api/v1/lessons/:id
   def destroy
     @lesson.destroy
-    render json: {}, status: :no_content
+    head :no_content
   end
 
   private
@@ -47,7 +40,7 @@ class Api::V1::LessonsController < ApplicationController
   # Otherwise, try to look up the right category by name
   def lesson_params
     @lesson_params ||= begin
-      lp = params.require(:lesson).permit(:name, :summary, :category, :source)
+      lp = params.permit(:name, :summary, :category, :source)
       category = params.require(:category)
       lp[:category] = if category.to_i.positive?
         Category.find(category)

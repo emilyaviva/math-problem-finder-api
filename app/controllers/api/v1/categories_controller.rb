@@ -4,37 +4,30 @@ class Api::V1::CategoriesController < ApplicationController
   # GET /api/v1/categories
   def index
     @categories = Category.all
-    render json: @categories, status: :ok
+    json_response(@categories)
   end
 
   # GET /api/v1/categories/:id
   def show
-    render json: @category, status: :ok
+    json_response(@category)
   end
 
   # POST /api/v1/categories
   def create
-    @category = Category.new(category_params)
-    if @category.save
-      render json: @category, status: :created, location: api_v1_category_url(@category)
-    else
-      render json: @category.errors, status: :unprocessable_entity
-    end
+    @category = Category.create!(category_params)
+    json_response(@category, :created)
   end
 
   # PUT/PATCH /api/v1/categories/:id
   def update
-    if @category.update(category_params)
-      render json: @category
-    else
-      render json: @category.errors, status: :unprocessable_entity
-    end
+    @category.update!(category_params)
+    json_response(@category)
   end
 
   # DELETE /api/v1/categories/:id
   def destroy
     @category.destroy
-    render json: {}, status: :no_content
+    head :no_content
   end
 
   private
@@ -44,6 +37,6 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name)
+    params.permit(:name)
   end
 end

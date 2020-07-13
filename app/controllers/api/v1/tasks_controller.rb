@@ -4,37 +4,30 @@ class Api::V1::TasksController < ApplicationController
   # GET /api/v1/tasks
   def index
     @tasks = Task.all
-    render json: @tasks, status: :ok
+    json_response(@tasks)
   end
 
   # GET /api/v1/tasks/:id
   def show
-    render json: @task, status: :ok
+    json_response(@task)
   end
 
   # POST /api/v1/tasks
   def create
-    @task = Task.new(task_params)
-    if @task.save
-      render json: @task, status: :created, location: api_v1_task_url(@task)
-    else
-      render json: @task.errors, status: :unprocessable_entity
-    end
+    @task = Task.create!(task_params)
+    json_response(@task, :created)
   end
 
   # PUT/PATCH /api/v1/tasks/:id
   def update
-    if @task.update(task_params)
-      render json: @task
-    else
-      render json: @task.errors, status: :unprocessable_entity
-    end
+    @task.update!(task_params)
+    json_response(@task)
   end
 
   # DELETE /api/v1/tasks/:id
   def destroy
     @task.destroy
-    render json: {}, status: :no_content
+    head :no_content
   end
 
   private
@@ -48,11 +41,10 @@ class Api::V1::TasksController < ApplicationController
   # Otherwise, try to look up the right lesson by name
   def task_params
     @task_params ||= begin
-      tp = params
-        .require(:task)
-        .permit(:name, :source, :link, :commentary, lessons: [])
-      lessons = params.require(:lessons)
-      tp[:lessons] = lessons.map do |l|
+      tp = params.permit(:name, :source, :link, :commentary, lessons: [])
+      lessons = params[:lessons]
+      raise Api::V1::UnprocessableMappingError if lessons.nil?
+      tp[:lessons] = lessons&.map do |l|
         if l.to_i.positive?
           Lesson.find(l)
         else
