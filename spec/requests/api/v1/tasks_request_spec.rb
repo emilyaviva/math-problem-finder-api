@@ -99,11 +99,11 @@ RSpec.describe "Api::V1::Tasks", type: :request do
 
     context 'when the request is valid' do
       before { put "/api/v1/tasks/#{task_id}", params: valid_attributes }
-      
+
       it 'returns status code 200' do
         expect(response).to have_http_status 200
       end
-      
+
       it 'updates the appropriate lesson' do
         expect(json['name']).to eq 'geez'
         expect(json['source']).to eq 'wheez'

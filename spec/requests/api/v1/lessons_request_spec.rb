@@ -51,7 +51,7 @@ RSpec.describe "Api::V1::Lessons", type: :request do
     let(:valid_attributes) do
       { name: 'foo', summary: 'bar', category: category_id }
     end
-  
+
     context 'when the request is valid' do
       before { post "/api/v1/lessons", params: valid_attributes }
 
@@ -83,10 +83,10 @@ RSpec.describe "Api::V1::Lessons", type: :request do
     let(:valid_attributes) do
       { name: 'baz', summary: 'quux', category: category_id }
     end
-  
+
     context 'when the request is valid' do
       before { put "/api/v1/lessons/#{lesson_id}", params: valid_attributes }
-      
+
       it 'returns status code 200' do
         expect(response).to have_http_status 200
       end

@@ -1,3 +1,4 @@
+# Custom concern to handle exceptions gracefully
 module ExceptionHandler
   extend ActiveSupport::Concern
 

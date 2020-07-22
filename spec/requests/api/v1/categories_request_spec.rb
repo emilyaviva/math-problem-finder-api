@@ -18,7 +18,7 @@ RSpec.describe "Api::V1::Categories", type: :request do
   end
 
   describe 'GET /api/v1/categories/:id' do
-    before { get "/api/v1/categories/#{category_id}"}
+    before { get "/api/v1/categories/#{category_id}" }
 
     context 'when the record exists' do
       it 'returns the category' do
