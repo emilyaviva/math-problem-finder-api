@@ -12,16 +12,16 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'paint'
   gem 'rspec-rails'
   gem 'rubocop-rails', require: false
+  gem 'whirly'
 end
 
 group :development do
   gem 'listen', '~> 3.2'
-  gem 'paint'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'whirly'
 end
 
 group :test do
