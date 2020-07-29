@@ -1,3 +1,4 @@
+# A Category model represents a category of Lessons
 class Category < ApplicationRecord
   has_many :lessons
 
